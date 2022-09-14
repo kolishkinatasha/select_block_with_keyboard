@@ -36,8 +36,8 @@ const useKeyPress = (targetKey) => {
     return () => {
       window.removeEventListener('keydown', downHandler);
       window.removeEventListener('keyup', upHandler);
-      window.addEventListener('keyleft', leftHandler);
-      window.addEventListener('keyright', rightHandler);
+      window.removeEventListener('keyleft', leftHandler);
+      window.removeEventListener('keyright', rightHandler);
     };
   });
 
