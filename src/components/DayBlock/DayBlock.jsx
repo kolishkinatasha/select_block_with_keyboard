@@ -1,32 +1,25 @@
+import React from 'react';
 import { observer } from 'mobx-react';
-import React, { useRef } from 'react';
+import clsx from 'clsx';
 
 import selectedDayStore from '../../stores/selectedDayStore';
 import classes from './DayBlock.module.scss';
 
 const DayBlock = ({ dayIndex, categoryId, taskId, id}) => {
 
-  const inputRef = useRef(null);
-
   const { setSelectedDay, selectedDay } = selectedDayStore;
 
   const isCurrentDaySelected = selectedDay
-    && dayIndex === selectedDay.col
-    && taskId === selectedDay.row
+    && dayIndex === selectedDay.colIndex
+    && taskId === selectedDay.rowIndex
     && selectedDay.categoryIndex === categoryId;
 
   return (
     <div
       onClick={() => setSelectedDay(taskId, dayIndex, categoryId)}
-      className={
-        [
-          classes.day_block,
-          isCurrentDaySelected ? classes.day_block__selected : '',
-        ].join(' ')
-      }
+      className={clsx(classes.day_block, isCurrentDaySelected && classes.day_block_selected)}
     >
       <input
-        ref={inputRef}
         data-category={categoryId}
         data-task={taskId}
         data-day={dayIndex}

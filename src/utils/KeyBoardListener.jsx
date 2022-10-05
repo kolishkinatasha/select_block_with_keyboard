@@ -50,26 +50,26 @@ const KeyBoardListener = () => {
     const isInputFocused = document.activeElement && document.activeElement.tagName === 'INPUT';
     // выполняем действия, если существует выбранный день и активный инпут
     if (selectedDay && !isInputFocused) {
-      let rowIndex = selectedDay.row;
-      let colIndex = selectedDay.col;
+      let rowIndex = selectedDay.rowIndex;
+      let colIndex = selectedDay.colIndex;
       let categoryIndex = selectedDay.categoryIndex;
  
       // при нажатии на клавиши стрелок вызываем функцию определения rowIndex и categoryIndex
       if (downPress) {
         // если нажата клавиша вниз шаг + 1
-        const data = getRowAndCategoryIndex(selectedDay.col, selectedDay.row, selectedDay.categoryIndex, + 1);
+        const data = getRowAndCategoryIndex(selectedDay.colIndex, selectedDay.rowIndex, selectedDay.categoryIndex, + 1);
         categoryIndex = data.categoryIndex;
         rowIndex = data.rowIndex;
       } else if (upPress) {
         // если нажата клавиша вверх шаг - 1
-        const data = getRowAndCategoryIndex(selectedDay.col, selectedDay.row, selectedDay.categoryIndex, -1);
+        const data = getRowAndCategoryIndex(selectedDay.colIndex, selectedDay.rowIndex, selectedDay.categoryIndex, -1);
         rowIndex = data.rowIndex;
         categoryIndex = data.categoryIndex;
       } else if (leftPress) {
         // если нажата клавиша влево и выбранный день находится в крайней слева колонке (шаг - 1)
         // необходимо перенести на выбранный день на 1 строку вверх в крайнюю справа колонку
-        if (selectedDay.col === 0) {
-          const prevData = getRowAndCategoryIndex(selectedDay.col, selectedDay.row, selectedDay.categoryIndex, -1);
+        if (selectedDay.colIndex === 0) {
+          const prevData = getRowAndCategoryIndex(selectedDay.colIndex, selectedDay.rowIndex, selectedDay.categoryIndex, -1);
           categoryIndex = prevData.categoryIndex;
           if (prevData.rowIndex !== rowIndex) {
             colIndex = daysNumber - 1;
@@ -77,13 +77,13 @@ const KeyBoardListener = () => {
           }
         } else {
           // иначе сдвигаем выбранный день на одну колонку влево
-          colIndex = selectedDay.col - 1;
+          colIndex = selectedDay.colIndex - 1;
         }
       } else if (rightPress) {
         // если нажата клавиша вправо и выбранный день находится в крайней справа колонке (шаг + 1)
         // необходимо перенести на выбранный день на 1 строку вниз в крайнюю слева колонку
-        if (selectedDay.col === daysNumber - 1) {
-          const nextData = getRowAndCategoryIndex(selectedDay.col, selectedDay.row, selectedDay.categoryIndex, +1);
+        if (selectedDay.colIndex === daysNumber - 1) {
+          const nextData = getRowAndCategoryIndex(selectedDay.colIndex, selectedDay.rowIndex, selectedDay.categoryIndex, +1);
           categoryIndex = nextData.categoryIndex;
           if (nextData.rowIndex !== rowIndex) {
             colIndex = 0;
@@ -91,7 +91,7 @@ const KeyBoardListener = () => {
           }
         } else {
           // иначе сдвигаем выбранный день на одну колонку вправо
-          colIndex = selectedDay.col + 1;
+          colIndex = selectedDay.colIndex + 1;
         }
       }
       
